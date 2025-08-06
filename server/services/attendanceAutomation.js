@@ -42,12 +42,6 @@ const markAbsentStaff = async (settings) => {
       .second(0)
       .add(workHours, "hour");
 
-    console.log("🕒 Now:", now.format("YYYY-MM-DD HH:mm:ss"));
-    console.log(
-      "⏰ Cutoff Time (end of work):",
-      cutoffTime.format("YYYY-MM-DD HH:mm:ss")
-    );
-
     if (now.isBefore(cutoffTime)) {
       console.log(
         "⏳ Too early to mark absent. Waiting until after work hours."
@@ -72,8 +66,6 @@ const markAbsentStaff = async (settings) => {
     );
 
     for (const staff of absentStaff) {
-      console.log("Marking absent for:", staff.fullname, currentDate);
-
       await db.execute(
         "INSERT INTO attendance (staffId, fullname, date, timeIn, timeOut, status) VALUES (?, ?, ?, NULL, NULL, ?)",
         [staff.staffId, staff.fullname, currentDate, "Absent"]

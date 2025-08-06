@@ -1,26 +1,8 @@
-@import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 @import "https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap";
-
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.fake-dark-mode {
-  filter: invert(100%);
-  transition: all 0.5s;
-}
-
-.btn-fake-dark-mode {
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 16px;
-  line-height: 1;
-  font-size: 26px;
-  background-color: #ffe8cc;
-  border: none;
-}
 
 @layer base {
  th {
@@ -36,8 +18,6 @@
 
 .btn {
   @apply rounded-lg;
-
-  /* @apply rounded-lg border-slate-700 bg-slate-400 px-5 py-2 text-slate-100 hover:text-white; */
 }
 .submit {
   @apply bg-slate-700 px-10 py-3 text-white duration-200 tracking-widest w-full;

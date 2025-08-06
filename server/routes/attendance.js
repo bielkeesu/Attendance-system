@@ -121,7 +121,6 @@ router.post("/", async (req, res) => {
         [now, newStatus, rows[0].id]
       );
 
-      console.log(now, newStatus);
       return res.json({ message: "Checked out successfully.", staff });
 
       //  ✅ If already checked in and checked out → Disallow
@@ -133,10 +132,10 @@ router.post("/", async (req, res) => {
       // Clock-in case
       const status = nowTime <= latestCheckIn ? "Incomplete" : "Late";
       if (nowTime > latestCheckIn && !allowLate) {
-        console.log(status, nowTime <= latestCheckIn, latestCheckIn, nowTime);
         return res.status(400).json({ error: "Check-in time has passed." });
-      } else if (nowTime > latestCheckIn && allowLate) {
+      } else if (nowTime < latestCheckIn && allowLate) {
         status = "Late";
+        console.log(nowTime, latestCheckIn, allowLate);
       }
 
       await db.execute(

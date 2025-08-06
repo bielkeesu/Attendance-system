@@ -11,7 +11,7 @@ function Logo({logoName, logo, className}) {
           className="w-10 h-10 rounded-full"
           alt="logo"
           />
-          <p className="max-w-xs md:max-w-full text-center lg:text-sm text-lg font-sans font-semibold px-4">{logoName}</p>
+          <p className="max-w-xs md:max-w-full text-center lg:text-sm text-lg font-sans font-semibold hidden md:block px-4">{logoName}</p>
       </Link>
     </div>
   );
