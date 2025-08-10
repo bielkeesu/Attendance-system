@@ -86,7 +86,7 @@ export default function AddEditStaffModal({ editingStaff, onClose }) {
           className="w-full border px-3 py-2 rounded"
         />
         <input
-          type="text"
+          type="number"
           placeholder="Phone No"
           value={formData.phoneNo}
           onChange={(e) =>

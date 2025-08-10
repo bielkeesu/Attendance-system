@@ -17,8 +17,8 @@ export default function DashboardPage() {
   const [totalAttendance, setTotalAttendance] = useState([]);
 
   const getValue = (label) =>
-    data.find((d) => d.name === label)?.value || 0;  
-  
+    data.find((d) => d.name === label)?.value || 0;   
+
     useEffect(() => {
       const fetchSummary = async () => {
         setLoading(true)

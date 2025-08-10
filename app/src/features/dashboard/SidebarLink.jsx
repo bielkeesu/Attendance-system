@@ -12,7 +12,7 @@ function SidebarLink({ to, label, icon }) {
         }
       >
         {icon}
-        <span>{label}</span>
+        <span className="hidden md:block">{label}</span>
       </NavLink>
     );
   }
