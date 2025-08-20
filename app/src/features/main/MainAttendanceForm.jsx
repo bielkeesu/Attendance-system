@@ -5,7 +5,9 @@ import Error from '../../ui/Error';
 import Button from '../../ui/Button';
 import MainDetailsCard from './MainDetailsCard';
 // import API_BASE_URL from '../../utils/apiConfig';
-const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function MainAttendanceForm() {
 

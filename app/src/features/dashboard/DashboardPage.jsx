@@ -8,7 +8,9 @@ import AttendancePieChart from '../../Components/AttendancePieChart';
 import Headings from '../../ui/Headings';
 import Spinner from '../../ui/Spinner';
 // import API_BASE_URL from '../../utils/apiConfig';
-const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function DashboardPage() {
   const { staffs } = useStaffs();
