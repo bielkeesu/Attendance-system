@@ -8,11 +8,7 @@ import StaffViewModal from "./StaffViewModal";
 import Headings from "../../ui/Headings";
 import Search from "../../ui/Search";
 import Button from "../../ui/Button";
-// import API_BASE_URL from "../../utils/apiConfig";
-
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import {getApiUrl} from "../../utils/apiConfig";
 
 export default function StaffPage() {
   const { staffs, dispatch, loading } = useStaffs();
@@ -35,7 +31,8 @@ export default function StaffPage() {
     if (!window.confirm("Are you sure you want to delete this staff?")) return;
 
     try {
-      await fetch(`${API_BASE_URL}/api/staff/${id}`, {
+      const apiUrl = await getApiUrl();
+      await fetch(`${apiUrl}/api/staff/${id}`, {
         method: "DELETE",
       });
       dispatch({ type: "DELETE_STAFF", payload: id });

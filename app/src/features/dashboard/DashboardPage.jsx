@@ -7,10 +7,7 @@ import SummaryCard from '../../Components/SummaryCard';
 import AttendancePieChart from '../../Components/AttendancePieChart';
 import Headings from '../../ui/Headings';
 import Spinner from '../../ui/Spinner';
-// import API_BASE_URL from '../../utils/apiConfig';
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import {getApiUrl} from '../../utils/apiConfig';
 
 export default function DashboardPage() {
   const { staffs } = useStaffs();
@@ -26,8 +23,10 @@ export default function DashboardPage() {
     useEffect(() => {
       const fetchSummary = async () => {
         setLoading(true)
+
         try {
-          const res = await fetch(`${API_BASE_URL}/api/attendance/summary/today`);
+          const apiUrl = await getApiUrl();
+          const res = await fetch(`${apiUrl}/api/attendance/summary/today`);
           const summary = await res.json();
   
           const chartData = [
@@ -51,7 +50,8 @@ export default function DashboardPage() {
     useEffect( ()=> async function (){
       setLoading(true);
       try{
-        const res = await fetch(`${API_BASE_URL}/api/attendance/all`);
+        const apiUrl = await getApiUrl();
+        const res = await fetch(`${apiUrl}/api/attendance/all`);
         const data = await res.json();
         setTotalAttendance(data)
 

@@ -1,6 +1,11 @@
-const API_BASE_URL =
-  process.env.NODE_ENV === "production"
-    ? "https://attendance-system-p8yd.onrender.com" // Replace with Render backend URL
-    : "http://localhost:5000"; // Local development backend
+// const API_BASE_URL =
+let API_BASE_URL;
 
-export default API_BASE_URL;
+export async function getApiUrl() {
+  if (!API_BASE_URL) {
+    const res = await fetch('/config.json');
+    const config = await res.json();
+    API_BASE_URL = config.API_BASE_URL;
+  }
+  return API_BASE_URL;
+}

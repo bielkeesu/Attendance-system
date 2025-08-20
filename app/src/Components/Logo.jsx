@@ -1,26 +1,34 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import API_BASE_URL from "../utils/apiConfig";
+import { getApiUrl } from "../utils/apiConfig";
 
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+function Logo({ logoName, logo, className }) {
+  const [apiUrl, setApiUrl] = useState("");
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  useEffect(() => {
+    async function fetchApiUrl() {
+      const url = await getApiUrl();
+      setApiUrl(url);
+    }
+    fetchApiUrl();
+  }, []);
 
+  if (!apiUrl) return null; // or a loader while fetching
 
-function Logo({logoName, logo, className}) {
   return (
     <div>
-      <Link to={'/'}
-        className={className}
-      >
+      <Link to="/" className={className}>
         <img
-          src={`${API_BASE_URL}/uploads/${logo}`}
+          src={`${apiUrl}/uploads/${logo}`}
           className="w-10 h-10 rounded-full"
           alt="logo"
-          />
-          <p className="max-w-xs md:max-w-full text-center lg:text-sm text-lg font-sans font-semibold hidden md:block px-4">{logoName}</p>
+        />
+        <p className="max-w-xs md:max-w-full text-center lg:text-sm text-lg font-sans font-semibold hidden md:block px-4">
+          {logoName}
+        </p>
       </Link>
     </div>
   );
-} 
+}
 
 export default Logo;

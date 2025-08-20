@@ -1,8 +1,6 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
-// import API_BASE_URL from "../utils/apiConfig";
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+import { getApiUrl } from '../utils/apiConfig';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // Create context
 const StaffContext = createContext();
@@ -47,7 +45,8 @@ export function StaffProvider({ children }) {
   const fetchStaffs = async () => {
     dispatch({ type: "SET_LOADING", payload: true });
     try {
-      const res = await fetch(`${API_BASE_URL}/api/staff`);
+      const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/staff`);
       const data = await res.json();
       dispatch({ type: "SET_STAFFS", payload: data });
     } catch (err) {

@@ -9,11 +9,8 @@ import Spinner from "../../ui/Spinner";
 import Headings from "../../ui/Headings";
 import Search from "../../ui/Search";
 import Button from "../../ui/Button";
+import {getApiUrl} from "../../utils/apiConfig";
 
-// import API_BASE_URL from "../../utils/apiConfig";
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function AttendancePage() {
   const { attendances, currentPage, totalPages, fetchAttendances, dispatch, loading } = useAttendances();
@@ -39,7 +36,9 @@ export default function AttendancePage() {
     if (!window.confirm("Delete this record?")) return;
     try {
       dispatch({ type: "LOADING" });
-      await fetch(`${API_BASE_URL}/api/attendance/${id}`, {
+      const apiUrl = await getApiUrl();
+
+      await fetch(`${apiUrl}/api/attendance/${id}`, {
         method: "DELETE",
       });
       dispatch({ type: "DELETE_ATTENDANCE", payload: id });

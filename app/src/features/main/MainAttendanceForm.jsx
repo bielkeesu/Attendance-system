@@ -4,10 +4,8 @@ import { useSettings } from '../../context/settingsContext';
 import Error from '../../ui/Error';
 import Button from '../../ui/Button';
 import MainDetailsCard from './MainDetailsCard';
-// import API_BASE_URL from '../../utils/apiConfig';
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+import {getApiUrl} from '../../utils/apiConfig';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 function MainAttendanceForm() {
 
@@ -27,7 +25,8 @@ function MainAttendanceForm() {
     
     try {
       setLoading(true);
-      const res = await fetch(`${API_BASE_URL}/api/attendance`, {
+      const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/attendance`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ staffId }),

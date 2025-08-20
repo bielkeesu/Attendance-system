@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../ui/Header";
 import Button from "../ui/Button";
-// import API_BASE_URL from "../utils/apiConfig";
-
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import {getApiUrl} from "../utils/apiConfig";
 
 
 export default function LoginPage() {
@@ -22,7 +18,8 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

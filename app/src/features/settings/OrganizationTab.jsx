@@ -1,15 +1,13 @@
-  import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSettings } from "../../context/settingsContext";
 import Button from "../../ui/Button";
-// import API_BASE_URL from "../../utils/apiConfig";
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiUrl } from "../../utils/apiConfig";
 
 export default function OrganizationTab() {
   const { state, updateOrganizationSettings } = useSettings();
   const { name, checkInTime, checkOutTime, logo } = state.organization;
 
+  const [apiUrl, setApiUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
@@ -19,6 +17,14 @@ export default function OrganizationTab() {
   });
 
   const [logoFile, setLogoFile] = useState(null);
+
+  useEffect(() => {
+    async function fetchApiUrl() {
+      const url = await getApiUrl();
+      setApiUrl(url);
+    }
+    fetchApiUrl();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,8 +46,10 @@ export default function OrganizationTab() {
     if (logoFile) formData.append("logo", logoFile);
 
     await updateOrganizationSettings(formData);
-    setLoading(false)
+    setLoading(false);
   };
+
+  if (!apiUrl) return null; // or a loader
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -87,20 +95,17 @@ export default function OrganizationTab() {
           onChange={handleLogoChange}
           className="block"
         />
-        {logo && (
+        {logo && apiUrl && (
           <img
-            src={`${API_BASE_URL}/uploads/${logo}`}
+            src={`${apiUrl}/uploads/${logo}`}
             alt="Logo"
             className="mt-2 w-20 h-20 object-contain"
           />
         )}
       </div>
 
-      <Button
-        type="update"
-        disabled={loading}
-      >
-        {loading ? "Saving.. " : "Save Changes"}
+      <Button type="update" disabled={loading}>
+        {loading ? "Saving.." : "Save Changes"}
       </Button>
     </form>
   );

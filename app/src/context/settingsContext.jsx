@@ -1,8 +1,6 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
-// import API_BASE_URL from "../utils/apiConfig";
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+import {getApiUrl} from "../utils/apiConfig";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const SettingsContext = createContext();
 
@@ -54,7 +52,8 @@ export function SettingsProvider({ children }) {
     const fetchSettings = async () => {
       dispatch({ type: "LOADING" });
       try {
-        const res = await fetch(`${API_BASE_URL}/api/settings/organization`);
+        const apiUrl = await getApiUrl();
+        const res = await fetch(`${apiUrl}/api/settings/organization`);
         if (!res.ok) throw new Error("Server Error");
         const data = await res.json();
 
@@ -72,7 +71,8 @@ export function SettingsProvider({ children }) {
   const updateOrganizationSettings = async (formData) => {
     dispatch({ type: "LOADING" });
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings/organization`, {
+      const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/settings/organization`, {
         method: "PUT",
         body: formData,
       });
@@ -86,7 +86,8 @@ export function SettingsProvider({ children }) {
   const updateAttendanceSettings = async (payload) => {
     dispatch({ type: "LOADING" });
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings/attendance`, {
+      const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/settings/attendance`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -102,7 +103,8 @@ export function SettingsProvider({ children }) {
   const updateProfileSettings = async (payload) => {
     dispatch({ type: "LOADING" });
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings/profile`, {
+      const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/settings/profile`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

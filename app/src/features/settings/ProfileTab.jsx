@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSettings } from "../../context/settingsContext";
 import Button from "../../ui/Button";
-// import API_BASE_URL from "../../utils/apiConfig";
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import {getApiUrl} from "../../utils/apiConfig";
 
 export default function ProfileTab() {
   const { state, dispatch } = useSettings();
@@ -22,8 +19,10 @@ export default function ProfileTab() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    
     try {
-      const res = await fetch(`${API_BASE_URL}/api/settings/profile`, {
+      const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/settings/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

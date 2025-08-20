@@ -1,8 +1,5 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
-// import API_BASE_URL from "../utils/apiConfig";
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import { getApiUrl } from '../utils/apiConfig';
 
 
 // Create context
@@ -53,7 +50,8 @@ export function AttendanceProvider({ children }) {
   const fetchAttendances = async (page = 1) => {
     dispatch({ type: "SET_LOADING", payload: true });
     try {
-      const res = await fetch(`${API_BASE_URL}/api/attendance/page?page=${page}&limit=10`);
+      const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/attendance/page?page=${page}&limit=10`);
       const data = await res.json();
   
       dispatch({ type: "SET_ATTENDANCES", payload: data.data});

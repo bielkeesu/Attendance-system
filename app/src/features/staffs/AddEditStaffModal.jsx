@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { useStaffs } from "../../context/staffContext";
 import Button from "../../ui/Button";
-// import API_BASE_URL from "../../utils/apiConfig";
-// const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+import {getApiUrl} from "../../utils/apiConfig";
 
 export default function AddEditStaffModal({ editingStaff, onClose }) {
   const isEdit = Boolean(editingStaff);
@@ -24,10 +21,10 @@ export default function AddEditStaffModal({ editingStaff, onClose }) {
     Object.entries(formData).forEach(([key, value]) =>
       data.append(key, value)
     );
-
+    const apiUrl = await getApiUrl();
     const url = isEdit
-      ? `${API_BASE_URL}/api/staff/${editingStaff.id}`
-      : `${API_BASE_URL}/api/staff`;
+      ? `${apiUrl}/api/staff/${editingStaff.id}`
+      : `${apiUrl}/api/staff`;
     const method = isEdit ? "PUT" : "POST";
 
     try {
