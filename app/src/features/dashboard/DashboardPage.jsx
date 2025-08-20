@@ -7,7 +7,8 @@ import SummaryCard from '../../Components/SummaryCard';
 import AttendancePieChart from '../../Components/AttendancePieChart';
 import Headings from '../../ui/Headings';
 import Spinner from '../../ui/Spinner';
-import API_BASE_URL from '../../utils/apiConfig';
+// import API_BASE_URL from '../../utils/apiConfig';
+const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
 
 export default function DashboardPage() {
   const { staffs } = useStaffs();

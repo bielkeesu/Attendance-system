@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-import API_BASE_URL from "../utils/apiConfig";
+// import API_BASE_URL from "../utils/apiConfig";
+
+const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
+
 
 function Logo({logoName, logo, className}) {
   return (

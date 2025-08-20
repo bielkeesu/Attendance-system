@@ -4,7 +4,8 @@ import { useSettings } from '../../context/settingsContext';
 import Error from '../../ui/Error';
 import Button from '../../ui/Button';
 import MainDetailsCard from './MainDetailsCard';
-import API_BASE_URL from '../../utils/apiConfig';
+// import API_BASE_URL from '../../utils/apiConfig';
+const API_BASE_URL = "https://attendance-system-p8yd.onrender.com";
 
 function MainAttendanceForm() {
 
