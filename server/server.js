@@ -17,8 +17,7 @@ dotenv.config();
 const port = process.env.PORT || 5000;
 
 const allowedOrigins = [
-  "http://localhost:3000", // Dev
-  "https://attendance-system-opal-eight.vercel.app/", // Vercel domain
+  "https://attendance-system-opal-eight.vercel.app", // Vercel domain
 ];
 
 app.use(
