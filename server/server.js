@@ -18,7 +18,7 @@ const port = process.env.PORT;
 
 const allowedOrigins = [
   "http://localhost:3000", // Dev
-  "https://your-vercel-app.vercel.app", // Vercel domain
+  "https://attendance-system-opal-eight.vercel.app/", // Vercel domain
 ];
 
 app.use(
