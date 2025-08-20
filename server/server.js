@@ -16,16 +16,13 @@ dotenv.config();
 
 const port = process.env.PORT || 5000;
 
-const allowedOrigins = [
-  "https://attendance-system-opal-eight.vercel.app", // Vercel domain
-];
-
 app.use(
   cors({
-    origin: allowedOrigins,
-    credentials: true,
+    origin: "https://attendance-system-zeta-nine.vercel.app",
+    credentials: true, // if you need cookies/auth
   })
 );
+
 app.use(express.json());
 
 app.get("/health", (req, res) => {
