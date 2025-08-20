@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getApiUrl } from "../utils/apiConfig";
 
 export default function useApiHealth() {
   const [error, setError] = useState(null);
@@ -6,8 +7,9 @@ export default function useApiHealth() {
 
   async function checkHealth() {
     try {
+      const apiUrl = await getApiUrl();
       setLoading(true);
-      const res = await fetch("http://localhost:5000/health");
+      const res = await fetch(`${apiUrl}/health`);
       if (!res.ok) throw new Error("Backend not available");
       await res.json(); // make sure response is valid JSON
       setError(null);

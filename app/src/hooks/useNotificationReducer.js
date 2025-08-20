@@ -1,4 +1,5 @@
 import { useReducer, useEffect } from 'react';
+import { getApiUrl } from '../utils/apiConfig';
 
 const initialState = {
   notifications: [],
@@ -31,7 +32,8 @@ export function useNotificationReducer() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/notifications');
+        const apiUrl = await getApiUrl();
+      const res = await fetch(`${apiUrl}/api/notifications`);
       const data = await res.json();
       dispatch({ type: 'FETCH_SUCCESS', payload: data });
     } catch (err) {
@@ -46,12 +48,14 @@ export function useNotificationReducer() {
   }, []);
 
   const markAsRead = async (id) => {
-    await fetch(`http://localhost:5000/api/notifications/mark-read/${id}`, { method: 'PUT' });
+    const apiUrl = await getApiUrl();
+    await fetch(`${apiUrl}/api/notifications/mark-read/${id}`, { method: 'PUT' });
     dispatch({ type: 'MARK_READ', payload: id });
   };
 
   const clearNotifications = async () => {
-    await fetch('http://localhost:5000/api/notifications/clear', { method: 'DELETE' });
+    const apiUrl = await getApiUrl();
+    await fetch(`${apiUrl}/api/notifications/clear`, { method: 'DELETE' });
     dispatch({ type: 'CLEAR' });
   };
 

@@ -19,6 +19,7 @@ const port = process.env.PORT || 5000;
 app.use(
   cors({
     origin: "https://attendance-system-zeta-nine.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true, // if you need cookies/auth
   })
 );
