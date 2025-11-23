@@ -9,6 +9,7 @@ import Spinner from "../../ui/Spinner";
 import Headings from "../../ui/Headings";
 import Search from "../../ui/Search";
 import Button from "../../ui/Button";
+import AttendanceModalView from "./AttendanceModalView";
 import {getApiUrl} from "../../utils/apiConfig";
 
 
@@ -16,6 +17,7 @@ export default function AttendancePage() {
   const { attendances, currentPage, totalPages, fetchAttendances, dispatch, loading } = useAttendances();
   const [searchDate, setSearchDate] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [viewAttendanceModal, setViewAttendanceModal]=useState(null);
   
   const handlePageChange = (page) => {
     if (page > 0 && page <= totalPages) {
@@ -129,8 +131,13 @@ export default function AttendancePage() {
             key: 'actions',
             label: 'Actions',
             render: (_,row) => (
+               
               <ActionDropdown
-              onView={() => alert(JSON.stringify(row, null, 2))}
+              // onView={() => alert(JSON.stringify(row, null, 2))}
+              onView={
+                ()=> setViewAttendanceModal(row)
+                //  setHighlightAttendanceId(row.id),
+              }
               onDelete={() => handleDelete(row.id)}
               />
             )
@@ -145,6 +152,9 @@ export default function AttendancePage() {
          { totalPages > 1 && <Pagination currentPage={currentPage} handlePageChange={handlePageChange} totalPages={totalPages} /> }
         </div>
         }
+         {viewAttendanceModal && (
+        <AttendanceModalView attendance={viewAttendanceModal} onClose={() => setViewAttendanceModal(null)} />
+      )}
     </div>
   );
 }

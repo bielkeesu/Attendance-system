@@ -48,10 +48,12 @@ export default function AddEditStaffModal({ editingStaff, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center z-50">
+    <div className="fixed inset-0 flex justify-center items-center z-50">
+      <div className="absolute inset-0 bg-black opacity-40" onClick={onClose}></div>
+
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded p-6 space-y-4 w-96"
+        className="bg-white rounded p-6 space-y-4 w-full max-w-xl z-50"
       >
         <h2 className="text-xl font-semibold">
           {isEdit ? "Edit Staff" : "Add New Staff"}

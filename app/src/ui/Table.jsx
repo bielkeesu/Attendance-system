@@ -2,7 +2,6 @@ import { forwardRef, memo } from "react";
 
 const Table = memo(
   forwardRef(({ columns, data }, ref) => {
-    console.log("Table rendered"); // For testing re-renders
     return (
       <table ref={ref} className="table-auto w-full text-left text-sm m-4">
         <thead className="border-b p-4">
