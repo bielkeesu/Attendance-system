@@ -65,9 +65,9 @@ router.post("/", async (req, res) => {
       return errorRes(res, 400, "You have already written a comment today.");
     }
 
-    // Accept comments only from 5 AM to 5 PM
+    // Accept comments only from 8 AM to 5 PM
     const hour = new Date().getHours();
-    if (hour < 5 || hour > 20) {
+    if (hour < 8 || hour > 17) {
       return errorRes(
         res,
         400,
