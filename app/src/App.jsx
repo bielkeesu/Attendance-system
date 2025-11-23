@@ -12,7 +12,6 @@ import { SettingsProvider } from './context/settingsContext';
 import { AttendanceProvider } from './context/AttendanceContext';
 import { NotificationProvider } from './context/NotificationProvider';
 import ProtectedRoute from './features/authentication/ProtectedRoute';
-import HealthCheck from './Components/HealthCheck';
 
 function App() {
 

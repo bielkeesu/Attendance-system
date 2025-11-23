@@ -1,42 +1,68 @@
-// hooks/useFetchReducer.js
-import { useEffect, useReducer } from 'react';
+// hooks/useNotificationReducer.js
+import { useEffect, useReducer, useCallback } from "react";
 
 const initialState = {
-  data: [],
+  notifications: [],
   loading: true,
   error: null,
 };
 
-function fetchReducer(state, action) {
+function reducer(state, action) {
   switch (action.type) {
-    case 'FETCH_SUCCESS':
-      return { ...state, data: action.payload, loading: false };
-    case 'FETCH_ERROR':
+    case "FETCH_START":
+      return { ...state, loading: true };
+    case "FETCH_SUCCESS":
+      return { ...state, notifications: action.payload, loading: false };
+    case "FETCH_ERROR":
       return { ...state, error: action.payload, loading: false };
-    case 'FETCH_START':
-      return { ...state, loading: true, error: null };
+    case "MARK_READ":
+      return {
+        ...state,
+        notifications: state.notifications.map((n) =>
+          n.id === action.payload ? { ...n, is_read: 1 } : n
+        ),
+      };
+    case "CLEAR_ALL":
+      return { ...state, notifications: [] };
     default:
       return state;
   }
 }
 
-export function useFetchReducer(url) {
-  const [state, dispatch] = useReducer(fetchReducer, initialState);
+export function useNotificationReducer() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  // FETCH ONCE — WITH useCallback (prevents infinite loop)
+  const fetchNotifications = useCallback(async () => {
+    try {
+      dispatch({ type: "FETCH_START" });
+      const res = await fetch("/api/notifications");
+
+      if (!res.ok) throw new Error("Network error");
+
+      const data = await res.json();
+      dispatch({ type: "FETCH_SUCCESS", payload: data });
+    } catch (err) {
+      dispatch({ type: "FETCH_ERROR", payload: err.message });
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      dispatch({ type: 'FETCH_START' });
-      try {
-        const res = await fetch(url);
-        const result = await res.json();
-        dispatch({ type: 'FETCH_SUCCESS', payload: result });
-      } catch (err) {
-        dispatch({ type: 'FETCH_ERROR', payload: err.message });
-      }
-    };
+    fetchNotifications();
+  }, [fetchNotifications]);
 
-    fetchData();
-  }, [url]);
+  const markAsRead = (id) => {
+    dispatch({ type: "MARK_READ", payload: id });
+  };
 
-  return state;
+  const clearNotifications = () => {
+    dispatch({ type: "CLEAR_ALL" });
+  };
+
+  return {
+    ...state,
+    markAsRead,
+    clearNotifications,
+    refetch: fetchNotifications,
+  };
 }

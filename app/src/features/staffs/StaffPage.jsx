@@ -44,8 +44,8 @@ export default function StaffPage() {
 
 
   return (
-    <div className="p-4 space-y-4">
-      <header className="flex flex-col m-6 space-y-6 sm:m-0 sm:mb-8 sm:space-y-0 justify-between py-3 px-5 sm:flex-row">
+    <div className="p-2 space-y-4">
+      <header className="flex flex-col m-5 space-y-4 sm:m-0 sm:mb-8 sm:space-y-0 justify-between py-2 px-5 sm:flex-row">
         <Search
           className="border px-3 py-2 rounded w-64"
           placeholder="Search staff..."

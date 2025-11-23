@@ -1,6 +1,7 @@
 import Notification from "../../ui/Notification"
 import { FaAngleRight } from 'react-icons/fa';
 import { NavLink } from "react-router-dom";
+import CommentBell from "../../Components/CommentBell";
 
 
 function DashboardHeader() {
@@ -13,8 +14,10 @@ function DashboardHeader() {
           <span> Dashboard </span>
           <FaAngleRight />
         </div>
+   
         <div className="flex justify-between space-x-6 items-center">
         <Notification />
+        <CommentBell />
           <div className="rounded-full border-slate-400 border bg-slate-50">
             <NavLink to="/admin/profile">
             <img
