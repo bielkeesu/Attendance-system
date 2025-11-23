@@ -1,19 +1,38 @@
-import { useState } from 'react';
-import { useNotificationReducer } from '../hooks/useNotificationReducer';
+import { useState, useEffect, useRef } from 'react';
 import { FaBell } from 'react-icons/fa';
+import { useNotifications } from '../context/NotificationProvider';
 
 export default function Notification() {
   const [open, setOpen] = useState(false);
+  const menuRef = useRef(null); // ADD REFERENCE
+
   const {
     notifications,
     markAsRead,
     clearNotifications,
-  } = useNotificationReducer();
+  } = useNotifications();
 
   const unreadCount = notifications.filter((n) => !n.is_read).length;
 
+  // CLOSE WHEN CLICK OUTSIDE
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [open]);
+
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <button className="relative p-2" onClick={() => setOpen(!open)}>
         <FaBell size={20} />
         {unreadCount > 0 && (

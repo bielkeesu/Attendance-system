@@ -5,6 +5,7 @@ import staffRoutes from "./routes/staff.js";
 import notificationRoutes from "./routes/notifications.js";
 import settingsRoutes from "./routes/settings.js";
 import attendanceRoutes from "./routes/attendance.js";
+import commentRoutes from "./routes/comment.js";
 import { markAbsentStaff } from "./services/attendanceAutomation.js";
 import authRoutes from "./routes/authController.js";
 import verifyToken from "./middleware/authMiddleware.js";
@@ -16,13 +17,31 @@ dotenv.config();
 
 const port = process.env.PORT || 5000;
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://attendance-system-zeta-nine.vercel.app",
+];
+
 app.use(
   cors({
-    origin: "https://attendance-system-zeta-nine.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true, // if you need cookies/auth
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
   })
 );
+
+// app.use(
+//   cors({
+//     origin:"https://attendance-system-zeta-nine.vercel.app",
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+//     credentials: true, // if you need cookies/auth
+//   })
+// );
 
 app.use(express.json());
 
@@ -36,6 +55,7 @@ app.use("/api/notifications", notificationRoutes);
 app.use("/api/settings", settingsRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/uploads", express.static("uploads"));
+app.use("/api/comment", commentRoutes);
 
 app.get("/", (req, res) => {
   res.send("Attendance System API is running");
